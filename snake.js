@@ -10,8 +10,12 @@ let direction = "RIGHT";
 let food = generateFood();
 let score = 0;
 let gameOver = false;
+let startX = null;
+let startY = null;
 
 document.addEventListener("keydown", changeDirection);
+canvas.addEventListener("touchstart", touchStart);
+canvas.addEventListener("touchmove", touchMove);
 
 function changeDirection(event) {
     if (gameOver) return; // Nezmení smer, ak je hra skončená
@@ -20,6 +24,32 @@ function changeDirection(event) {
     if (key === "ArrowDown" && direction !== "UP") direction = "DOWN";
     if (key === "ArrowLeft" && direction !== "RIGHT") direction = "LEFT";
     if (key === "ArrowRight" && direction !== "LEFT") direction = "RIGHT";
+}
+
+function touchStart(event) {
+    startX = event.touches[0].clientX;
+    startY = event.touches[0].clientY;
+}
+
+function touchMove(event) {
+    if (!startX || !startY) return;
+
+    const endX = event.touches[0].clientX;
+    const endY = event.touches[0].clientY;
+
+    const diffX = endX - startX;
+    const diffY = endY - startY;
+
+    if (Math.abs(diffX) > Math.abs(diffY)) {
+        if (diffX > 0 && direction !== "LEFT") direction = "RIGHT";
+        if (diffX < 0 && direction !== "RIGHT") direction = "LEFT";
+    } else {
+        if (diffY > 0 && direction !== "UP") direction = "DOWN";
+        if (diffY < 0 && direction !== "DOWN") direction = "UP";
+    }
+
+    startX = endX;
+    startY = endY;
 }
 
 function generateFood() {
