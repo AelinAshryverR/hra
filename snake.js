@@ -87,14 +87,14 @@ function update() {
     if (head.x < 0 || head.y < 0 || head.x >= canvas.width || head.y >= canvas.height || snakeCollision(head)) {
         gameOver = true;
         let grade;
-        if (score < 1) grade = "FX - Skús to znova!";
-        else if (score <= 2) grade = "E - Opakovanie je matka múdrosti";
-        else if (score <= 4) grade = "D - Učivo zvládnuté";
-        else if (score <= 6) grade = "C - Výborné!";
-        else if (score <= 8) grade = "B - Skoro perfektné!";
-        else if (score <= 30) grade = "A - Skvelý výkon!";
-        else if (score <= 80) grade = "A+ - Elitný hráč!";
-        else grade = "Prekonal si autora hry! Pošli screenshot!";
+        if (score < 1) grade = "FX - Keď nestihneš jeden vlak pôjde ďalší ale až budúci rok";
+        else if (score <= 2) grade = "E - Opakovanie je matka učenia";
+        else if (score <= 4) grade = "D - Učivo zvládnuté vopred ale len to samotné učtivo";
+        else if (score <= 6) grade = "C - Už je to lepšie ale stále nič moc!";
+        else if (score <= 8) grade = "B - Dobre, ale kde máš prácu navyše";
+        else if (score <= 30) grade = "A - Zvládol si to, ale nie si špeciálny";
+        else if (score <= 80) grade = "A+ - Skoro perfektné ale ešte sa dalo urobiť viac";
+        else grade = "Prekonal si score autora hry! Daj screen a budeš zaradený na stenu slávy!";
 
         showGameOver(grade);
     }
