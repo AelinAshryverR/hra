@@ -1,11 +1,18 @@
 const canvas = document.createElement("canvas");
 const ctx = canvas.getContext("2d");
 document.body.appendChild(canvas);
-canvas.width = 500;  // Zmena veľkosti plátna
-canvas.height = 500;
 
-tileSize = 20;
-let snake = [{ x: 240, y: 240 }];
+// Dynamická veľkosť plátna podľa zariadenia
+function resizeCanvas() {
+    const size = Math.min(window.innerWidth, window.innerHeight) - 20; // Orezanie 20px pre okraje
+    canvas.width = size;
+    canvas.height = size;
+    tileSize = Math.floor(size / 25); // Upravíme veľkosť dlaždíc podľa plátna
+}
+resizeCanvas();
+window.addEventListener("resize", resizeCanvas);
+
+let snake = [{ x: 12 * tileSize, y: 12 * tileSize }];
 let direction = "RIGHT";
 let food = generateFood();
 let score = 0;
@@ -18,8 +25,8 @@ canvas.addEventListener("touchstart", touchStart);
 canvas.addEventListener("touchmove", touchMove);
 
 function changeDirection(event) {
-    if (gameOver) return; // Nezmení smer, ak je hra skončená
-    const key = event.key.toLowerCase(); // Konvertujeme na malé písmená pre istotu
+    if (gameOver) return;
+    const key = event.key.toLowerCase();
 
     if ((key === "arrowup" || key === "w") && direction !== "DOWN") direction = "UP";
     if ((key === "arrowdown" || key === "s") && direction !== "UP") direction = "DOWN";
@@ -80,14 +87,14 @@ function update() {
     if (head.x < 0 || head.y < 0 || head.x >= canvas.width || head.y >= canvas.height || snakeCollision(head)) {
         gameOver = true;
         let grade;
-        if (score < 1) grade = "FX-keď nestihneš jeden vlak príde druhý ale až budúci rok";
-        else if (score <= 2) grade = "E-Opakovanie je matka štúdia";
-        else if (score <= 4) grade = "D-učivo ovládaš";
-        else if (score <= 6) grade = "C-vieš viac jak potrebuješ";
-        else if (score <= 8) grade = "B-Dobre ale kde je niečo navyše";
-        else if (score <= 30) grade = "A-Občas aj ten kto nič nevie tak to má dobré";
-        else if (score <= 80) grade = "A+Gratulujem prekonali ste sa";
-        else grade = "Prekonali ste skóre autora, ak budete mať screen môžete byť zahrnutý do siene slávy";
+        if (score < 1) grade = "FX - Skús to znova!";
+        else if (score <= 2) grade = "E - Opakovanie je matka múdrosti";
+        else if (score <= 4) grade = "D - Učivo zvládnuté";
+        else if (score <= 6) grade = "C - Výborné!";
+        else if (score <= 8) grade = "B - Skoro perfektné!";
+        else if (score <= 30) grade = "A - Skvelý výkon!";
+        else if (score <= 80) grade = "A+ - Elitný hráč!";
+        else grade = "Prekonal si autora hry! Pošli screenshot!";
 
         showGameOver(grade);
     }
@@ -98,10 +105,13 @@ function snakeCollision(head) {
 }
 
 function showGameOver(grade) {
-    const gameOverText = `Hra skončila! Score: ${score} - Tvoja známka: ${grade}`;
+    const gameOverText = `Hra skončila! Score: ${score} - Známka: ${grade}`;
     const restartButton = document.createElement("button");
     restartButton.textContent = "Hrať znova";
     restartButton.onclick = restartGame;
+    restartButton.style.fontSize = "20px";
+    restartButton.style.padding = "10px";
+    restartButton.style.marginTop = "10px";
 
     document.body.appendChild(document.createElement("br"));
     document.body.appendChild(document.createTextNode(gameOverText));
@@ -111,16 +121,15 @@ function showGameOver(grade) {
 
 function restartGame() {
     gameOver = false;
-    snake = [{ x: 240, y: 240 }];
+    snake = [{ x: 12 * tileSize, y: 12 * tileSize }];
     direction = "RIGHT";
     score = 0;
     food = generateFood();
 
-    // Odstránime text a tlačidlo pre reštart
     document.body.innerHTML = "";
     document.body.appendChild(canvas);
 
-    gameLoop();  // Spustíme hru znova
+    gameLoop();
 }
 
 function draw() {
@@ -135,8 +144,8 @@ function draw() {
     ctx.fillStyle = "red";
     ctx.fillRect(food.x, food.y, tileSize, tileSize);
     ctx.fillStyle = "white";
-    ctx.font = "16px Arial";
-    ctx.fillText(food.value, food.x + 5, food.y + 15);
+    ctx.font = `${tileSize}px Arial`;
+    ctx.fillText(food.value, food.x + tileSize / 4, food.y + tileSize / 1.5);
 }
 
 function gameLoop() {
