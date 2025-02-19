@@ -4,7 +4,7 @@ document.body.appendChild(canvas);
 
 // Dynamická veľkosť plátna podľa zariadenia
 function resizeCanvas() {
-    const size = Math.min(window.innerWidth, window.innerHeight) - 20; // Orezanie 20px pre okraje
+    const size = Math.min(window.innerWidth, window.innerHeight) - 30; // Orezanie 30px pre okraje
     canvas.width = size;
     canvas.height = size;
     tileSize = Math.floor(size / 25); // Upravíme veľkosť dlaždíc podľa plátna
