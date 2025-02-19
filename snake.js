@@ -19,6 +19,7 @@ canvas.addEventListener("touchmove", touchMove);
 
 function changeDirection(event) {
     if (gameOver) return; // Nezmení smer, ak je hra skončená
+    const key = event.key.toLowerCase(); // Konvertujeme na malé písmená pre istotu
     const key = event.key;
     if (key === "ArrowUp" || key === "w" && direction !== "DOWN") direction = "UP";
     if (key === "ArrowDown" || key === "s" && direction !== "UP") direction = "DOWN";
