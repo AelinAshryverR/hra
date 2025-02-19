@@ -86,7 +86,8 @@ function update() {
         else if (score <= 6) grade = "C-vieš viac jak potrebuješ";
         else if (score <= 8) grade = "B-Dobre ale kde je niečo navyše";
         else if (score <= 30) grade = "A-Občas aj ten kto nič nevie tak to má dobré";
-        else grade = "A+Gratulujem prekonali ste sa";
+        else if (score <= 80) grade = "A+Gratulujem prekonali ste sa";
+        else grade = "Prekonali ste skóre autora, ak budete mať screen môžete byť zahrnutý do siene slávy";
 
         showGameOver(grade);
     }
