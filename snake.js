@@ -20,10 +20,10 @@ canvas.addEventListener("touchmove", touchMove);
 function changeDirection(event) {
     if (gameOver) return; // Nezmení smer, ak je hra skončená
     const key = event.key;
-    if (key === "ArrowUp" && direction !== "DOWN") direction = "UP";
-    if (key === "ArrowDown" && direction !== "UP") direction = "DOWN";
-    if (key === "ArrowLeft" && direction !== "RIGHT") direction = "LEFT";
-    if (key === "ArrowRight" && direction !== "LEFT") direction = "RIGHT";
+    if (key === "ArrowUp" || key === "w" && direction !== "DOWN") direction = "UP";
+    if (key === "ArrowDown" || key === "s" && direction !== "UP") direction = "DOWN";
+    if (key === "ArrowLeft" || key === "a" && direction !== "RIGHT") direction = "LEFT";
+    if (key === "ArrowRight" || key === "d" && direction !== "LEFT") direction = "RIGHT";
 }
 
 function touchStart(event) {
